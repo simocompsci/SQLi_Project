@@ -20,7 +20,7 @@ class AuthController extends Controller
 
         $name = $request->input('name') ?? '';
         $email = $request->input('email');
-        $password = bcrypt($request->input('password'));
+        $password = $request->input('password');
 
         // VULNERABLE: direct string concatenation
         $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')";
@@ -51,11 +51,11 @@ class AuthController extends Controller
         $password = $request->password;
 
         try {
-            // Fully vulnerable SQL injection query
+            // 🔥 Fully vulnerable SQL injection
             $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
             $user = DB::select($sql);
 
-            // If empty, login fails
+            // ❌ if empty = invalid credentials
             if (empty($user)) {
                 return response()->json([
                     "status" => "error",
@@ -64,12 +64,13 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            // Fix: use $user[0], not $user
-            $userObject = $user;
+            // ✔ Extract the first user row
+            $userObject = $user[0];
 
-            // Store vulnerable session
+            // ✔ Store vulnerable session (fake login)
             session(['vulnerable_logged_in' => true]);
-            session(['user_id' => $userObject]);
+            session(['user_id' => $userObject->id]);  // store only ID
+            session(['user_email' => $userObject->email]); // optional
 
             return response()->json([
                 "status" => "success",
@@ -87,6 +88,7 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
 
 
 

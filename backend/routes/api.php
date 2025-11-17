@@ -36,3 +36,5 @@ Route::get('/posts', [PostsController::class, 'getAllPosts']);
 Route::post('/posts/add', [PostsController::class, 'addPost']);
 Route::post('/posts/update', [PostsController::class, 'updatePost']);
 Route::post('/posts/delete', [PostsController::class, 'deletePost']);
+Route::get('/posts/{id}', [PostsController::class, 'getUserPosts']);
+

@@ -8,15 +8,32 @@ use Illuminate\Support\Facades\DB;
 class PostsController extends Controller
 {
     // Get all posts for a user (VULNERABLE)
-    public function getPostsByUser($userId)
+    public function getUserPosts($id)
     {
-        // SQL injection: userId concatenated directly
-        $query = "SELECT * FROM posts WHERE user_id = $userId";
+        // EXTREMELY VULNERABLE SQL (deliberately unsafe)
+        $sql = "SELECT id, user_id, title, content, is_sensitive, created_at, updated_at 
+            FROM posts WHERE user_id = $id";
 
-        $posts = DB::select($query);
+        try {
+            $posts = DB::select($sql);
 
-        return response()->json($posts);
+            return response()->json([
+                "status" => "success",
+                "user_id" => $id,
+                "posts" => $posts,        // includes full content
+                "executed_sql" => $sql
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                "status" => "error",
+                "message" => "Database error",
+                "error" => $e->getMessage(),
+                "executed_sql" => $sql
+            ], 500);
+        }
     }
+
 
     // Add a post (EXTREMELY VULNERABLE)
     public function addPost(Request $request)
