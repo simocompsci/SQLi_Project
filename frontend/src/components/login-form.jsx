@@ -60,6 +60,7 @@ export function LoginForm({ className, ...props }) {
           </div>
           <Input
             id="password"
+            type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}

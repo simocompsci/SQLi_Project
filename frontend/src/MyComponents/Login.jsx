@@ -1,5 +1,5 @@
 import { GalleryVerticalEnd } from "lucide-react"
-import Image1 from "../assets/pexels-tranmautritam-69432.jpg"
+import Image1 from "../assets/pexels-walls-io-440716388-15595147.jpg"
 import { LoginForm } from "@/components/login-form"
 
 export default function Login() {

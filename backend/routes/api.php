@@ -20,8 +20,8 @@ Route::post('/logout', [AuthController::class, 'Logout']);
 // --------------------------------------
 Route::get('/admin/users', [AdminController::class, 'getAllUsers']);
 Route::get('/admin/search', [AdminController::class, 'searchUser']);
-Route::post('/admin/update', [AdminController::class, 'updateUser']);
-Route::post('/admin/delete', [AdminController::class, 'deleteUser']);
+Route::post('/admin/update/{id}', [AdminController::class, 'updateUser']);
+Route::post('/admin/delete/{id}', [AdminController::class, 'deleteUser']);
 
 // --------------------------------------
 // USER CONTROLLER (PROFILE + UPDATE)
@@ -37,4 +37,5 @@ Route::post('/posts/add', [PostsController::class, 'addPost']);
 Route::post('/posts/update', [PostsController::class, 'updatePost']);
 Route::post('/posts/delete', [PostsController::class, 'deletePost']);
 Route::get('/posts/{id}', [PostsController::class, 'getUserPosts']);
+Route::get('/posts/search/{id}', [PostsController::class, 'searchUserPosts']);
 

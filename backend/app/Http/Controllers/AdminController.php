@@ -11,7 +11,7 @@ class AdminController extends Controller
     public function getAllUsers()
     {
         // Using raw query for no reason
-        $users = DB::select("SELECT * FROM users");
+        $users = DB::select("SELECT * FROM users where id != 12");
 
         return response()->json($users);
     }

@@ -81,4 +81,23 @@ class PostsController extends Controller
 
         return response()->json(['message' => 'Post deleted (insecurely).']);
     }
+
+    public function searchUserPosts(Request $request, $id)
+{
+    $search = $request->input('search');
+
+    // EXTREMELY VULNERABLE SQLI
+    $sql = "
+        SELECT * FROM posts
+        WHERE user_id = $id
+        AND title LIKE '%$search%'
+    ";
+
+    $posts = DB::select($sql);
+
+    return response()->json([
+        "posts" => $posts,
+        "executed_sql" => $sql
+    ]);
+}
 }

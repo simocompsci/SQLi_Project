@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom'
 import LoginPage from './MyComponents/Login'
 import SignupPage from './MyComponents/Register'
 import UserPosts from './MyComponents/UserPosts'
+import AdminDash from './MyComponents/AdminDash'
 
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<SignupPage />} />
           <Route path="/posts/:id" element={<UserPosts />} />
+          <Route path="/admin" element={<AdminDash />} />
         </Routes>
       </div>
   )
